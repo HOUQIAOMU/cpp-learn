@@ -1,0 +1,3 @@
+/home/jacob/cpp/cpp-learn/lab4/exercise1/build/CMakeFiles/TransferNum2Words.dir
+/home/jacob/cpp/cpp-learn/lab4/exercise1/build/CMakeFiles/edit_cache.dir
+/home/jacob/cpp/cpp-learn/lab4/exercise1/build/CMakeFiles/rebuild_cache.dir

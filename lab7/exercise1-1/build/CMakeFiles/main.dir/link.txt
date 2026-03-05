@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/main.dir/src/main.cpp.o -o main  -Wl,-rpath,/home/jacob/cpp/cpp-learn/lab7/exercise1-1/build libvabs.so 

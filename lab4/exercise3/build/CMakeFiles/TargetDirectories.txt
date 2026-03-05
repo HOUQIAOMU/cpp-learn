@@ -1,0 +1,3 @@
+/home/jacob/cpp/cpp-learn/lab4/exercise3/build/CMakeFiles/exercise3.dir
+/home/jacob/cpp/cpp-learn/lab4/exercise3/build/CMakeFiles/edit_cache.dir
+/home/jacob/cpp/cpp-learn/lab4/exercise3/build/CMakeFiles/rebuild_cache.dir

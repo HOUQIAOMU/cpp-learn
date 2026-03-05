@@ -1,0 +1,4 @@
+/home/jacob/cpp/cpp-learn/lab6/exercise2/build/CMakeFiles/swap_static.dir
+/home/jacob/cpp/cpp-learn/lab6/exercise2/build/CMakeFiles/test_swap.dir
+/home/jacob/cpp/cpp-learn/lab6/exercise2/build/CMakeFiles/edit_cache.dir
+/home/jacob/cpp/cpp-learn/lab6/exercise2/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/TransferNum2Words.dir/src/convert.cpp.o CMakeFiles/TransferNum2Words.dir/src/main.cpp.o -o TransferNum2Words 

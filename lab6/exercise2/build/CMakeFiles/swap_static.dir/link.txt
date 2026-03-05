@@ -1,0 +1,2 @@
+/usr/bin/ar qc libswap.a CMakeFiles/swap_static.dir/src/swap.cpp.o
+/usr/bin/ranlib libswap.a

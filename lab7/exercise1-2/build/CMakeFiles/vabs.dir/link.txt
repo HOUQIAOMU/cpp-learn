@@ -1,0 +1,2 @@
+/usr/bin/ar qc libvabs.a CMakeFiles/vabs.dir/src/vabs_template.cpp.o
+/usr/bin/ranlib libvabs.a
