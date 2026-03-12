@@ -2,90 +2,141 @@
 #define __CALCULATOR_HPP__
 
 #include <iostream>
+#include <cctype>
+#include <string>
+#include <algorithm>
 class Calculator {
   private:
+    std::string expression;
     double numa;
     double numb;
-    char operator;
-    std::string expression;
-    void find_Calculator_member()
+    char op;
+    bool valid = false;
+
+    bool find_Calculator_member(std::string & expr)
     //此函数要提取出输入的linux命令中的运算符以及两个数字。
     {
-        //1.提取运算符
-        bool find_operator = false;
-        int operator_position = -1;
-        for(int i = 0; i < expression.length(); i++)
+      expr.erase(std::remove_if(expr.begin(), expr.end(), ::isspace), expr.end()); // 移除空格
+      if (expr.empty())
+      {
+        std::cerr << "Error: Empty expression!" << std::endl;
+        return false; // Return or handle as needed
+      }
+      bool numa_exist = false;
+      std::string numa_str;
+      std::string numb_str;
+      int operator_pos = -1;
+      bool find_operator = false;
+      
+
+      //------------1.寻找运算符----------------//
+        for(int i = 0; i<expr.length();i++)
         {
-            if(expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/')
-            {
-                
-                if(i == 0 &&(expression[i] == '+' || expression[i] == '-'))
-                {
-                    // 处理第一位情况
-                    continue;
-                }
-                operator = expression[i];
-                operator_position = i;
-                find_operator = true;
-                break;
-            }
-        }
-        if(!find_operator) //防止找不到运算符情况
-        {
-            std::cerr << "Error: Invalid expression!" << std::endl;
-            return;
-        }
-        if(operator_position == expression.length() - 1) //防止运算符在最后一位情况
-        {
-            std::cerr << "Error: Invalid expression!" << std::endl;
-            return;
+          //如果第一个是字符，那是和数字一起的，不太对，所以继续往下找
+          if(i == 0 && (expr[i] == '-' || expr[i] == '+')) //如果第一个字符是负号或者正号，则继续往下找
+          {
+            continue;
+          }
+          
+          
+          else if(expr[i] == '+' || expr[i] == '-' || expr[i] == '*' || expr[i] == '/')
+          {
+            operator_pos = i;
+            op = expr[i];
+            find_operator = true;
+            break;
+          }
+                   
         }
 
-        // //2.提取numa
-        // for(int i = 0; i< operator_position; i++)
-        // {
-        //     if(expression[i] >= '0' && expression[i] <= '9' || expression[i] == '.')
-        //     {
-        //         std::string numa_str += expression[i];
-        //     }
-        //     else
-        //     {
-        //         std::cerr << "Error: Invalid character in first number!" << std::endl;
-        //         return;
-        //     }
-        // }
-        
+        if(!find_operator)
+        {
+          std::cerr << "Error: No operator found!" << std::endl;
+          return false; // Return or handle as needed
+        }
 
-        
+        // ------------2.寻找numa------------------//
+        for(int i = 0; i<operator_pos;i++)
+        {
+          if(isdigit(expr[i]) || expr[i] == '.' || (i == 0 && (expr[i] == '-' || expr[i] == '+'))) //如果是数字或者小数点，或者第一个字符是负号或者正号，则继续往下找
+          {
+            numa_str += expr[i];
+            
+          }
+          else
+          {
+            std::cerr << "Error: Invalid character in first number!" << std::endl;
+            return false; // Return or handle as needed
+          }
+        }
+
+        //------------3.寻找numb------------------//
+        for(int i = operator_pos + 1; i < expr.length(); i++)
+        {
+          if(isdigit(expr[i]) || expr[i] == '.' || (i == operator_pos + 1 && (expr[i] == '-' || expr[i] == '+'))) //如果是数字或者小数点，或者第一个字符是负号或者正号，则继续往下找
+          {
+            numb_str += expr[i];
+            
+          }
+          else
+          {
+            std::cerr << "Error: Invalid character in second number!" << std::endl;
+            return false; // Return or handle as needed
+          }
+        }
+
+        if(numa_str.empty() || numb_str.empty())
+        {
+          std::cerr << "Error: Missing number!" << std::endl;
+          return false; // Return or handle as needed
+        }
+        numa = std::stod(numa_str);
+        numb = std::stod(numb_str); 
+        return true;
     }
+
   public:
-    // Calculator(double a, double b) : numa(a), numb(b) {}
-    // double calculate() {
-    //     switch (operator) {
-    //         case '+':
-    //             return numa + numb;
-    //         case '-':
-    //             return numa - numb;
-    //         case '*':
-    //             return numa * numb;
-    //         case '/':
-    //             if (numb != 0) {
-    //                 return numa / numb;
-    //             } else {
-    //                 std::cerr << "Error: Division by zero!" << std::endl;
-    //                 return 0; // Return 0 or handle as needed
-    //             }
-    //         default:
-    //             std::cerr << "Error: Invalid operator!" << std::endl;
-    //             return 0; // Return 0 or handle as needed
-    //     }
-    // }
+    Calculator(const char *expr):expression(expr){
+      valid = find_Calculator_member(expression);
+      if(!valid)
+      {
+        std::cerr << "Wrong expression!" << std::endl;
+        // Handle as needed, e.g., throw an exception or set default values
+      }
+    }
 
-    // bool 
+    double calculate() {
+        switch (op) {
+            case '+':
+                return numa + numb;
+            case '-':
+                return numa - numb;
+            case '*':
+                return numa * numb;
+            case '/':
+                if (numb != 0) {
+                    return numa / numb;
+                } else {
+                    std::cerr << "Error: Division by zero!" << std::endl;
+                    return 0; // Return 0 or handle as needed
+                }
+            default:
+                std::cerr << "Error: Invalid operator!" << std::endl;
+                return 0; // Return 0 or handle as needed
+        }
+    }
 
-    void display_operator(
-        std::cout << "Operator: " << operator << std::endl;
-    )
+    void print_result() {
+      if(!valid)
+      {
+        return;
+      }
+      double result = calculate();
+      std::cout << numa << op << numb << "=" << result << std::endl;
+    }
+    
 
 };
+
+#endif
 
